@@ -1,7 +1,11 @@
-import { Box, GridForm, StrokeButton } from "@codecademy/gamut";
-import { loginUser } from "../../data/auth";
+import { Alert, Box, GridForm, StrokeButton, Text } from "@codecademy/gamut";
+import { loginUser, logoutUser } from "../../data/auth";
+import { useState } from "react";
 
 export const Login: React.FC = () => {
+  const [loginState, setLoginState] = useState({ error: false, resp: "" });
+  const [loading, setLoading] = useState(false);
+
   return (
     <Box
       bg="background-selected"
@@ -14,11 +18,9 @@ export const Login: React.FC = () => {
       width={{ _: "100%", xs: "75%", sm: "45%" }}
       maxWidth="24rem"
     >
-      <StrokeButton
-        onClick={() => loginUser({ username: "j0nes", name: "me" })}
-      >
-        Login automagically
-      </StrokeButton>
+      <Text as="h1">log in to homeward bound</Text>
+      <StrokeButton onClick={() => logoutUser()}>Logout</StrokeButton>
+      {loginState?.error && <Alert type="error">{loginState.resp}</Alert>}
       <GridForm
         hideRequiredText
         fields={[
@@ -37,11 +39,19 @@ export const Login: React.FC = () => {
             validation: { required: true },
           },
         ]}
-        onSubmit={(values) => {
-          action("Form Submitted")(values);
+        onSubmit={async (values: { email: string; name: string }) => {
+          setLoading(true);
+          const resp = await loginUser(values);
+          if (resp?.error) {
+            setLoginState(resp);
+          } else {
+            /// redirect
+          }
+          setLoading(false);
         }}
         submit={{
           contents: "login",
+          loading: loading,
           position: "right",
           size: 12,
         }}
