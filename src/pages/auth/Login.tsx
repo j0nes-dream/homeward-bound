@@ -1,4 +1,5 @@
-import { Box, GridForm } from "@codecademy/gamut";
+import { Box, GridForm, StrokeButton } from "@codecademy/gamut";
+import { loginUser } from "../../data/auth";
 
 export const Login: React.FC = () => {
   return (
@@ -13,6 +14,11 @@ export const Login: React.FC = () => {
       width={{ _: "100%", xs: "75%", sm: "45%" }}
       maxWidth="24rem"
     >
+      <StrokeButton
+        onClick={() => loginUser({ username: "j0nes", name: "me" })}
+      >
+        Login automagically
+      </StrokeButton>
       <GridForm
         hideRequiredText
         fields={[
