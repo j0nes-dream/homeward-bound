@@ -1,10 +1,12 @@
-import { Alert, Box, GridForm, StrokeButton, Text } from "@codecademy/gamut";
-import { loginUser, logoutUser } from "../../data/auth";
+import { Alert, Box, GridForm, Text } from "@codecademy/gamut";
+import { loginUser } from "../../data/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export const Login: React.FC = () => {
   const [loginState, setLoginState] = useState({ error: false, resp: "" });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -13,13 +15,21 @@ export const Login: React.FC = () => {
       borderRadius={"xl"}
       borderStyle="solid"
       borderWidth={1}
-      py={"16"}
-      px={"32"}
+      py={16}
+      px={32}
       width={{ _: "100%", xs: "75%", sm: "45%" }}
       maxWidth="24rem"
     >
-      <Text as="h1">log in to homeward bound</Text>
-      <StrokeButton onClick={() => logoutUser()}>Logout</StrokeButton>
+      <Text
+        as="h1"
+        variant="title-sm"
+        width="100%"
+        textAlign={"center"}
+        mt={8}
+        mb={24}
+      >
+        log in to homeward bound
+      </Text>
       {loginState?.error && <Alert type="error">{loginState.resp}</Alert>}
       <GridForm
         hideRequiredText
@@ -45,7 +55,7 @@ export const Login: React.FC = () => {
           if (resp?.error) {
             setLoginState(resp);
           } else {
-            /// redirect
+            navigate("/pups");
           }
           setLoading(false);
         }}
