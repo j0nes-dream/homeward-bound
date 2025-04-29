@@ -10,7 +10,7 @@ export const Routing: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index path="/" element={<Home />} />
         <Route element={<UserAuth />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
